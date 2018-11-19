@@ -1,34 +1,45 @@
 //***** PARI O DISPARI ******//
 
-//L'utente decide se vince pari, si parte dalla situazione in cui vince dispari
-var utenteVinceConPari = false;
+//Eseguiamo la funziona principale per giocare una volta
+gioca(prompt('Vince pari o dispari?'), parseInt(prompt('Digita un numero da 1 a 5')));
 
-var regolaUtente = prompt('Vince pari o dispari?');
+//funzione che accetta una parola(parola) e un numero(da 1 a 5 )
+//per eseguire il gioco del pari o dispari(contro la CPU)
 
-if (regolaUtente == 'pari') {
-  utenteVinceConPari = true;
+function gioca(regolaUtente, numeroUtente) {
+
+  var utenteVinceConPari = vincePariDa(regolaUtente);
+
+  console.log('Hai scelto ' + numeroUtente);
+
+  var numeroCpu = generaNumeroCasualePerCpuFinoA(5);
+
+  //otteniamo il numero finale
+  var sommaScelti = numeroUtente + numeroCpu;
+  console.log('Il totale è ' + sommaScelti);
+
+  //Valutiamo il vincitore
+  if ((utenteVinceConPari && sommaScelti % 2 === 0) || (!utenteVinceConPari && sommaScelti % 2 != 0)) {
+    console.log('Utente vince');
+  } else {
+    console.log('Cpu vince');
+  }
 }
 
-//Stampiamo in console il risultato della scelta dell'utente
-if (utenteVinceConPari) {
-  console.log('Vince Pari');
-} else {
-  console.log('Vince Dispari');
+function vincePariDa(regolaUtente) {
+
+  if (regolaUtente == 'pari') {
+    console.log("L'utente vincerà con Pari");
+    return true;
+  }
+
+  console.log("L'utente vincerà con Dispari");
+  return false;
 }
 
-//Otteniamo un numero scelto dall'utente e dalla Cpu
-var numeroUtente = parseInt(prompt('Digita un numero da 1 a 5'));
-console.log('Hai scelto ' + numeroUtente);
-var numeroCpu = Math.ceil(Math.random() * 5);
-console.log('La cpu sceglie ' + numeroCpu);
+function generaNumeroCasualePerCpuFinoA(numeroMassimo) {
 
-//otteniamo il numero finale
-var sommaScelti = numeroUtente + numeroCpu;
-console.log('Il totale è ' + sommaScelti);
-
-//Valutiamo il vincitore
-if ((utenteVinceConPari && sommaScelti % 2 === 0) || (!utenteVinceConPari && sommaScelti % 2 != 0)){
-  console.log('utente vince');
-} else {
-  console.log('vince la cpu');
+  var numeroCpu = Math.ceil(Math.random() * numeroMassimo);
+  console.log('La cpu sceglie ' + numeroCpu);
+  return numeroCpu;
 }
